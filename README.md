@@ -1,4 +1,4 @@
-# pokeDex
+# pokeDex Project
 
  //////////// Summary /////////
 
@@ -31,16 +31,38 @@
 
 
 
-
-
-
-
 //////////// API  /////////
 
-- Here is the API I am planning to use
+- Here is the API I am planning to use to gather all of my Pokemon Data
 
 https://pokeapi.co/
 
+
+
+//////////// WireFrames  /////////
+
+//Login Page
+
+
+![Screenshot 2023-12-21 at 11 14 32 AM (2)](https://github.com/F2easy/pokeDex/assets/101888578/8c08ed0e-2ea4-402e-8697-514226118387)
+
+
+// Main Menu
+
+
+![Screenshot 2023-12-21 at 11 33 46 AM (2)](https://github.com/F2easy/pokeDex/assets/101888578/fff632da-def0-47f2-b619-fdf408e4e002)
+
+
+// PokeDex Page
+
+
+![Screenshot 2023-12-21 at 11 24 10 AM (2)](https://github.com/F2easy/pokeDex/assets/101888578/c1aa8891-93af-4319-8e31-e512582f8128)
+
+
+// My Team Page
+
+
+![Screenshot 2023-12-21 at 11 43 55 AM (2)](https://github.com/F2easy/pokeDex/assets/101888578/0a15a398-9458-465f-a502-87a00d467f88)
 
 
 
