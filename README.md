@@ -26,7 +26,8 @@
 
 //////////// ERD Diagram /////////
 
-[PokeDex.pdf](https://github.com/F2easy/pokeDex/files/13743397/PokeDex.pdf)
+![Screenshot 2023-12-21 at 9 56 44 AM 2](https://github.com/F2easy/pokeDex/assets/101888578/fad03207-59e6-49ff-9bf7-d1c03dea613f)
+
 
 
 
