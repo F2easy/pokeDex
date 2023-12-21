@@ -1,7 +1,13 @@
 # pokeDex
 
+ //////////// Summary /////////
+
+ - This application will be able to to simulate a PokeDex Database that will display all Pokemon, with images and a few basic stats about the Pokemon.
+ - Trainers/User will be able to add and remove Pokemon to a total team of 6 and save that team.  
+
+
 //////////// User Stories /////////
- 
+
 - As a user, I want the ability to sign up/create an account.
 - As a user, I want the ability to sign in to the accountr I created. 
 - As a user, I want the ability to change my password. 
@@ -20,4 +26,22 @@
 
 //////////// ERD Diagram /////////
 
-![Alt text](https://file%252B.vscode-resource.vscode-cdn.net/Users/felixferreras/Desktop/Screenshot%25202023-12-21%2520at%25209.56.44%25E2%2580%25AFAM%25202.png?version%253D1703171113813)
+[PokeDex.pdf](https://github.com/F2easy/pokeDex/files/13743397/PokeDex.pdf)
+
+
+
+
+
+
+
+//////////// API  /////////
+
+- Here is the API I am planning to use
+
+https://pokeapi.co/
+
+
+
+
+
+
