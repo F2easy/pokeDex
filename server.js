@@ -2,7 +2,7 @@
 /// Import Dependencies ///
 ///////////////////////////
 const express = require('express') // import express framework
-require('dotenv').config // import/ load ENV variables
+require('dotenv').config() // import/ load ENV variables
 const path = require('path') // import path module
 
 ////////////////////////////
