@@ -24,6 +24,7 @@ const app = express() // call the express function
 ////////////////////////////
 /// Routes ///
 ///////////////////////////
+// basic home route
 app.get('/', (req,res) => {
   res.send('the app is connected')
 })
@@ -34,7 +35,7 @@ app.get('/', (req,res) => {
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
-  console.log('Your server is running go catch it ')
+  console.log('Your server is running, go catch it ')
 })
 
 
