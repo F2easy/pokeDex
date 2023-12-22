@@ -1,42 +1,60 @@
-////////////////////////////
-/// Import Dependencies ///
-///////////////////////////
+//////////////////////////////////
+//// Import Dependencies      ////
+//////////////////////////////////
 const express = require('express') // import express framework
-require('dotenv').config() // import/ load ENV variables
+require('dotenv').config() // import/load ENV variables
 const path = require('path') // import path module
+const middleware = require('./utils/middleware')
+/////////////////////////
+//// Import Routers  ////
+/////////////////////////
+const UserRouter = require('./controllers/userControllers')
+const PlaceRouter = require('./controllers/placeControllers')
 
-////////////////////////////
-/// Import Routers ///
-///////////////////////////
-
-
-
-////////////////////////////
-/// Create the app object ///
-///////////////////////////
+////////////////////////////////////////////////////
+//// Create the app object + set up view engine ////
+////////////////////////////////////////////////////
 const app = express() // call the express function
 
-////////////////////////////
-/// Middleware ///
-///////////////////////////
+// view engine - ejs
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
+/////////////////////
+//// Middleware  ////
+/////////////////////
+middleware(app)
 
-////////////////////////////
-/// Routes ///
-///////////////////////////
+/////////////////
+//// Routes  ////
+/////////////////
 // basic home route
-app.get('/', (req,res) => {
-  res.send('the app is connected')
+app.get('/', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // res.send('the app is connected')
+    res.render('home.ejs', { username, loggedIn, userId })
 })
 
-////////////////////////////
-/// Server Listener ///
-///////////////////////////
+app.use('/users', UserRouter)
+app.use('/places', PlaceRouter)
+
+// error page
+app.get('/error', (req, res) => {
+    const error = req.query.error || 'Ope! Something went wrong...try again'
+
+    const { username, loggedIn, userId } = req.session
+
+    // res.send(error)
+    res.render('error.ejs', { error, userId, username, loggedIn })
+})
+
+//////////////////////////
+//// Server Listener  ////
+//////////////////////////
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
-  console.log('Your server is running, go catch it ')
+    console.log('Your server is running, better go catch it')
 })
 
-
-//END
+// End
