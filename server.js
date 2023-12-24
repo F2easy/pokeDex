@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
 app.use('/users', UserRouter)
 app.use('/places', PlaceRouter)
 
+
 // error page
 app.get('/error', (req, res) => {
     const error = req.query.error || 'Ope! Something went wrong...try again'
@@ -57,4 +58,6 @@ app.listen(PORT, () => {
     console.log('Your server is running, better go catch it')
 })
 
+
 // End
+
