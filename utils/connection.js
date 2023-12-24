@@ -1,11 +1,11 @@
 /////////////////////////////////////
-/// Import Dependencies         ////
+//// Import Dependencies         ////
 /////////////////////////////////////
 require('dotenv').config() // Load my ENV file's variables
 const mongoose = require('mongoose') // import the mongoose library
 
 /////////////////////////////////////
-/// Database Connection         ////
+//// Database Connection         ////
 /////////////////////////////////////
 // this is where we will set up our inputs for our database connect function
 const DATABASE_URL = process.env.DATABASE_URL
@@ -26,6 +26,6 @@ mongoose.connection
     .on('error', (err) => console.log('An error occurred: \n', err))
 
 /////////////////////////////////////
-/// Export our Connection       ///
+//// Export our Connection       ////
 /////////////////////////////////////
 module.exports = mongoose
