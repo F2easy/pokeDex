@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
    res.render('home.ejs', { username, loggedIn, userID})
 })
 //////////////////////////
-//// Server Listener  ////
+//// Server Listener  ///
 //////////////////////////
 const PORT = process.env.PORT
 app.listen(PORT, () => {
