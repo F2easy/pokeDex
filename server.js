@@ -6,6 +6,9 @@ const middleware = require('./utils/middleware')
 /////////////////////////
 //// Import Routers  ////
 /////////////////////////
+// register routes everytime you create a new router file
+// meaning improting the router and server js
+const UserRouter = require('./controllers/userControllers')
 
 ////////////////////////////////
 //// Create the app object  ////
@@ -35,6 +38,8 @@ app.get('/', (req, res) => {
    // res.send('the app is connected')
    res.render('home.ejs', { username, loggedIn, userID})
 })
+
+app.use('/users', UserRouter)
 //////////////////////////
 //// Server Listener  ///
 //////////////////////////
