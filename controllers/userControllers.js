@@ -110,7 +110,11 @@ router.get('/logout', (req, res) => {
   res.render('users/logout', {username, loggedIn, userId})
 })
 // DELETE -> logout
-
+router.delete('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/')
+  })
+})
 
 
 
