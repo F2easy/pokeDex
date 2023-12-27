@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo') // connect-mongo(for the session)
 require('dotenv').config()
 const methodOverride = require('method-override') // for forms and CRUD
 
+
 //////////////////////////////////
 //// Middleware Function      ////
 //////////////////////////////////
@@ -47,6 +48,7 @@ const middleware = (app) => {
         })
     )
 }
+
 
 ////////////////////////////////////////////
 //// Export the Middleware Function     ////
