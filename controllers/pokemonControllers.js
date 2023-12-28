@@ -5,9 +5,10 @@
 //  Import Dependencies ///
 //////////////////////////////////
 const express = require('express')
+const axios = require('axios')
 const allPokemonURL = process.env.POKEMON_API_URL
 const nameSearchBaseURL = process.env.POKEMON_NAME_URL
-const axios = require('axios')
+
 
 
 //////////////////////////////////
@@ -23,15 +24,15 @@ const router = express.Router()
 //////////////////////////////////
 // GET -> /pokemon/all
 // gives all pokemon in the api for an index
-router.get('/all',(req,res) => {
+router.get('/all', (req,res) => {
   const { username, loggedIn, userId } = req.session
   // we have to make our api call
   axios(allPokemonURL)
   // if we get data, render an index page    
   .then(apiRes => {
-    console.log('this came back from the apit: \n', apiRes)
+    console.log('this came back from the api: \n', apiRes.data[0])
 
-    res.send(apiRes)
+    res.send(apiRes.data)
   })
   // if something goes wrong, display an error page
       .catch(err => {
