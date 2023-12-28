@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware')
 // register routes everytime you create a new router file
 // meaning improting the router and server js
 const UserRouter = require('./controllers/userControllers')
+const PokemonRouter = require('./controllers/pokemonControllers')
 
 ////////////////////////////////
 //// Create the app object  ////
@@ -43,6 +44,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', UserRouter)
+app.use('/pokemon', PokemonRouter)
 
 // error page
 app.get('/error', (req, res) => {
