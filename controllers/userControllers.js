@@ -90,16 +90,15 @@ router.post('/login', async(req, res) =>{
           // once we're loggen in, redirect to the home page
           res.redirect('/')
         } else{
-          res.send('something went wrong - no pw match') 
+          res.redirect (`/error?error=Usernamer%20Password%20is%20incorrect`)
         }
       } else{
-        res.send('something went wrong - no user with that name')
+        res.redirect (`/error?error=user%20does%20not%20exist%20please%20create%20account`)
       }
     })
-    .catch(error => {
+    .catch(err => {
       console.log('error')
-
-      res.send('something went wrong')
+      res.redirect (`/error?error=${err}`)
    })
 })
 
