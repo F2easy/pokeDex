@@ -11,6 +11,8 @@ const nameSearchBaseURL = process.env.POKEMON_NAME_URL
 
 
 
+
+
 //////////////////////////////////
 //  Create Router ///
 //////////////////////////////////
@@ -30,9 +32,9 @@ router.get('/all', (req,res) => {
   axios(allPokemonURL)
   // if we get data, render an index page    
   .then(apiRes => {
-    console.log('this came back from the api: \n', apiRes.data[0])
+    console.log('this came back from the api: \n', apiRes.data.results)
 
-    res.send(apiRes.data)
+    res.render('pokemon/index', { pokemon: apiRes.data.results, username, userId, loggedIn})
   })
   // if something goes wrong, display an error page
       .catch(err => {
