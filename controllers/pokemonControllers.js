@@ -57,10 +57,10 @@ router.get('/:name',(req, res) => {
     .then(apiRes => {
       console.log('this is apiRes.data \n', apiRes.data)
       
-      //  res.send(apiRes.data)
-       const pokemonInfo = apiRes.data
+      // res.send(apiRes.data)
+        const pokemonInfo = apiRes.data
       // render our results on the 'show'/detail page
-     res.render('pokemon/show', { pokemon: pokemonInfo, username, userId, loggedIn})
+       res.render('pokemon/show', { pokemon: pokemonInfo, username, userId, loggedIn})
     })
     // if we get an error display said error
   .catch(err => {

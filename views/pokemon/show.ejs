@@ -1,23 +1,40 @@
 <%- include('../partials/header') %>
-<header>Pokemon Stuff</header>
+
 
 <div class="container center">
   <a href="/pokemon/all" class="btn btn-warning">Back to PokeDex</a>
-  <h2 class="text-center name-title"><%= pokemon.name %></h2>
   <div class="container col text-center">
-      <img src="<%= pokemon.sprites.other.showdown.front_default %>" alt="pokeemon" class="show-image">
+</div>
+<div>
+  <div class="reg">
+    <h2 class="text-capitalize" class="text-center name-title"><%= pokemon.name %></h2>
+    <img src="<%= pokemon.sprites.other.showdown.front_default %>" alt="pokemon" class="gif">
+</div> 
+  <div class="special">
+    <h2 class="shiny-text" class="text-center name-title">Shiny Version</h2>
+    <img src="<%= pokemon.sprites.other.showdown.front_shiny %>" alt="pokemon" class="shiny">
   </div>
-
-
-
-
-
-
-
-
-
-
-
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Height</th>
+        <th scope="col">Height</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Type</th>
+        <th scope="col">Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row"><%= pokemon.id %></td>
+        <td scope="row"><%= pokemon.height %></td>
+        <td scope="row"><%= pokemon.weight %></td>
+        <td scope="row"><%= pokemon.types %></td>
+      </tr>
+    </tbody>
+  </table>
+<div>
+  
 
 
 
