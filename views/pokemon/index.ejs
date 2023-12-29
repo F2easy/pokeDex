@@ -3,11 +3,12 @@
 <div class="container center">
     <div class="container row text-center">
         <% pokemon.forEach(function(p) {%>
-            <div class="card mt-3 me-3 countryCard">
-                
+            <div class="card mt-3 me-3 pokemonCard">
                 <div class="card-body">
-                    <h5 class="card-title"><%= p.name %></h5>
+                    <h5 class="text-capitalize" class="card"> <%= p.name %></h5> 
                     <a href="/pokemon/<%= p.name %>" class="btn">More Info</a>
+
+                    
                 </div>
             </div>
         <% }) %>
