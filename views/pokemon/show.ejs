@@ -5,12 +5,12 @@
   <a href="/pokemon/all" class="btn btn-warning">Back to PokeDex</a>
   <div class="container col text-center">
 </div>
-<div>
+<div class="container">
   <div class="reg">
     <h2 class="text-capitalize" class="text-center name-title"><%= pokemon.name %></h2>
     <img src="<%= pokemon.sprites.other.showdown.front_default %>" alt="pokemon" class="gif">
 </div> 
-  <div class="special">
+  <div class="shiny">
     <h2 class="shiny-text" class="text-center name-title">Shiny Version</h2>
     <img src="<%= pokemon.sprites.other.showdown.front_shiny %>" alt="pokemon" class="shiny">
   </div>
@@ -29,7 +29,9 @@
         <td scope="row"><%= pokemon.id %></td>
         <td scope="row"><%= pokemon.height %></td>
         <td scope="row"><%= pokemon.weight %></td>
-        <td scope="row"><%= pokemon.types %></td>
+        <td scope="row"><%= pokemon.types.map(function(type) 
+        { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
+        <td scope="row"><%= pokemon.flavor_text_enteries %></td>
       </tr>
     </tbody>
   </table>

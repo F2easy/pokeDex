@@ -4,29 +4,18 @@ body {
 
 }
 
+
+
 .reg {
-
-  
-}
-
-.shiny-text {
- color: gold;
- float: right;
- margin-right: 10%;
- margin-top: 10%;
-}
-
-.gif {
-  height: 10%;
-  width: 10%;
-  margin-left: 10px;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .shiny {
-  height: 10%;
-  width: 10%;
-  margin-left: 75%;
-  margin-bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
