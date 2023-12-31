@@ -35,8 +35,14 @@ router.get('/all', (req,res) => {
   .then(apiRes => {
     console.log('this came back from the api: \n', apiRes.data.results)
     // apiRes is name and the url inside of the url there is an array of objects about
-    res.render('pokemon/index', { pokemon: apiRes.data.results, username, userId, loggedIn})
-    
+   // res.render('pokemon/index', { pokemon: apiRes.data.results, username, userId, loggedIn})
+    const pokemon = apiRes.data.results.map((data, index) => ({
+      name: data.name,
+      id: index + 1,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png`,
+    }));
+
+     res.render('pokemon/index', { pokemon, username, userId, loggedIn})
   })
   // if something goes wrong, display an error page
       .catch(err => {

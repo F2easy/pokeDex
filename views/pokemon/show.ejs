@@ -17,6 +17,7 @@
   <table class="table table-striped mt-3">
     <thead>
       <tr>
+        <th scope="col">Pokemon Name</th>
         <th scope="col">Pokemon ID</th>
         <th scope="col">Height</th>
         <th scope="col">Weight</th>
@@ -26,6 +27,7 @@
     </thead>
     <tbody>
       <tr>
+        <td scope="row" class="text-capitalize"><%= pokemon.name %></td>
         <td scope="row"><%= pokemon.id %></td>
         <td scope="row"><%= pokemon.height %></td>
         <td scope="row"><%= pokemon.weight %></td>
@@ -35,6 +37,29 @@
       </tr>
     </tbody>
   </table>
+  <hr>
+    <% if (loggedIn) {%>
+        <form action="">
+          <fieldset>
+            <input type="submit" class="btn btn-success" value="Add Pokemon">
+<!-- name pokemonId height weight type onTeam favorite -->
+              <input hidden type="text" name="name" value="<%= pokemon.name %>">
+              <input hidden type="text" name="pokemonId" value="<%= pokemon.id %>">
+              <input hidden type="number" name="height" value="<%= pokemon.height %>">
+              <input hidden type="number" name="weight" value="<%= pokemon.weight %>">
+              <input hidden type="text" name="type" value="<%= pokemon.types.map(function(type) 
+              { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %>">
+              <label for="onTeam">On Team</label>
+              <input type="checkbox" name="onTeam" >
+              <label for="favorite">Favorite?</label>
+              <input type="checkbox" name="favorite" checked>
+          </fieldset>
+        </form>
+    <%  } else {%>
+        <p> Log in to start Creating Your Team</p>
+      <%  } %>
+  <hr>
+  <a href="/pokemon/all" class="Back to Pokedex></a>
 <div>
   
 
