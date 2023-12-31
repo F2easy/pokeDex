@@ -6,9 +6,9 @@
 //////////////////////////////////
 const express = require('express')
 const axios = require('axios')
-const allPokemonURL = process.env.POKEMON_API_URL
+const allPokemonURL = process.env.API_BASE_URL
 const nameSearchBaseURL = process.env.POKEMON_NAME_URL
-const pokemonDesc = process.env.POKEMON_DESCR_UR
+const pokemonDesc = process.env.POKEMON_DESCR_URL
 
 
 

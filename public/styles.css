@@ -18,4 +18,8 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.shiny-text {
+  color: gold;
+  transform-style: preserve-3d;
 
+}
