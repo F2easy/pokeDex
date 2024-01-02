@@ -39,7 +39,8 @@
   </table>
   <hr>
     <% if (loggedIn) {%>
-        <form action="">
+      <h5> Add this Pokemon to your team by clicking the box below!</h5>
+        <form action="/pokemon/add" method="POST">
           <fieldset>
             <input type="submit" class="btn btn-success" value="Add Pokemon">
 <!-- name pokemonId height weight type onTeam favorite -->
@@ -59,7 +60,7 @@
         <p> Log in to start Creating Your Team</p>
       <%  } %>
   <hr>
-  <a href="/pokemon/all" class="Back to Pokedex></a>
+  <a href="/pokemon/all" class="Back to Pokedex"></a>
 <div>
   
 

@@ -6,9 +6,11 @@
 //////////////////////////////////
 const express = require('express')
 const axios = require('axios')
+const Pokemon = require('../models/pokemon')
 const allPokemonURL = process.env.API_BASE_URL
 const nameSearchBaseURL = process.env.POKEMON_NAME_URL
 const pokemonDesc = process.env.POKEMON_DESCR_URL
+
 
 
 
@@ -50,6 +52,53 @@ router.get('/all', (req,res) => {
         res.redirect (`/error?error=${err}`)
      })
 })
+
+// POST --> /places/add
+// gets data for the all pokemon show pages and adss to the users list
+router.post('/add', (req,res) => {
+  const { username, loggedIn, userId } = req.session
+
+  const thePokemon = req.body
+  thePokemon.owner = userId
+  // default value for a checked box is 'on'
+  // this line of code coverts it 2x
+  // which results in a boolean value
+  thePokemon.onTeam = !!thePokemon.onTeam
+  thePokemon.favorite = !!thePokemon.favorite
+  console.log('this must be the pokemon: \n', thePokemon)
+  
+  Pokemon.create(thePokemon)
+    .then(newPokemon => {
+     // res.send(newPokemon)
+     res.redirect(`/pokemon/myTeam`)
+    })
+    .catch(err => {
+      console.log('error')
+      res.redirect (`/error?error=${err}`)
+   })
+  
+})
+
+
+// GET --> /pokemon/trainer
+// displays all the user's saved places
+router.get('/trainer', (req,res) => {
+  const { username, loggedIn, userId } = req.session
+
+  // query the DB for all pokemon beloging to the logged in trainer
+  Pokemon.find({ owner: userId })
+  // display them in a pokemon team format
+  .then(userPokemon => {
+  // res.send(userPokemon)
+   res.render('pokemon/trainer', { pokemon: userPokemon, username, userId, loggedIn })
+  })
+  // which 
+  .catch (err => {
+    console.log('error')
+    res.redirect (`/error?error=${err}`)
+  })
+})
+
 
 // GET -> /pokemon/:name
 // gives us a specific Pokemon's details after clicking card

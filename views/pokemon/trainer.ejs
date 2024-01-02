@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+
+<div class="container center">
+  <h2>All <%= username %>'s Teams</h2>
+  <hr>  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Pokemon Name</th>
+        <th scope="col">Pokemon ID</th>
+        <th scope="col">Height</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Type</th>
+        <th scope="col">Info</th>
+        <th scope="col">On Team ?</th>
+        <th scope="col">Favorite ?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% pokemon.forEach((p) => { %>
+      
+      <tr>
+        <td scope="row" class="text-capitalize"><%= p.name %></td>
+        <td scope="row"><%=p.id %></td>
+        <td scope="row"><%=p.height %></td>
+        <td scope="row"><%=p.weight %></td>
+        <td scope="row"><%=p.types.map(function(type) 
+        { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
+        <td scope="row"><%= p.flavor_text_enteries %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<%- include('../partials/footer') %>
