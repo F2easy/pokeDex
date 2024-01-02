@@ -20,13 +20,14 @@
       <% pokemon.forEach((p) => { %>
       
       <tr>
-        <td scope="row" class="text-capitalize"><%= p.name %></td>
+        <td scope="row"><a href="pokemon/trainer/<%= p.id %>"> class="text-capitalize"> </a> <%= p.name %></td>
         <td scope="row"><%=p.id %></td>
         <td scope="row"><%=p.height %></td>
         <td scope="row"><%=p.weight %></td>
         <td scope="row"><%=p.types.map(function(type) 
         { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
         <td scope="row"><%= p.flavor_text_enteries %></td>
+        
       </tr>
       <% }) %>
     </tbody>

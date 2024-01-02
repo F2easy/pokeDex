@@ -99,6 +99,25 @@ router.get('/trainer', (req,res) => {
   })
 })
 
+// GET -> /trainer/:id
+// Will display a single instance of a user's saved places
+
+router.get('/trainer/:id',(req,res) =>{
+  const { username, loggedIn, userId } = req.session
+  // find a specific place using the id
+  Pokemon.findById(req.params.id)
+  // display a user-specific show page
+  .then(thePlace => {
+    res.send(thePokemon)
+  })
+  // send an error page is something goes wrong
+  .catch (err => {
+    console.log('error')
+    res.redirect (`/error?error=${err}`)
+  })
+})
+
+
 
 // GET -> /pokemon/:name
 // gives us a specific Pokemon's details after clicking card
