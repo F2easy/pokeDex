@@ -1,9 +1,19 @@
 
 body {
   background-color: darkgrey;
+  background-image: url('/images/background.png');
 
 }
 
+.card-body {
+  width: auto;
+  height: 15%;
+  
+}
+
+.pokemon-image {
+ width: 50%;
+}
 
 
 .reg {
@@ -22,4 +32,9 @@ body {
   color: gold;
   transform-style: preserve-3d;
 
+}
+
+.background {
+height: 100vh ;
+width: 100vw;
 }

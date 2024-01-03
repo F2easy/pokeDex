@@ -11,27 +11,37 @@
         <th scope="col">Height</th>
         <th scope="col">Weight</th>
         <th scope="col">Type</th>
-        <th scope="col">Info</th>
         <th scope="col">On Team ?</th>
         <th scope="col">Favorite ?</th>
+        <th scope="col">Delete Buddy</th>
       </tr>
     </thead>
     <tbody>
       <% pokemon.forEach((p) => { %>
       
       <tr>
-        <td scope="row"><a href="pokemon/trainer/<%= p.id %>"> class="text-capitalize"> </a> <%= p.name %></td>
-        <td scope="row"><%=p.id %></td>
+        <td scope="row"><a href="pokemon/trainer/<%= p.pokemonId %>"> <class="text-capitalize"> </a> <%= p.name %></td>
+        <td scope="row"><%=p.pokemonId %></td>
         <td scope="row"><%=p.height %></td>
         <td scope="row"><%=p.weight %></td>
-        <td scope="row"><%=p.types.map(function(type) 
-        { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
-        <td scope="row"><%= p.flavor_text_enteries %></td>
+        <td scope="row"><%=p.type %></td>
+        <td scope="row"><%=p.OnTeam ? 'Y' : 'N' %></td>
+        <td scope="row"><%=p.favorite ? 'Y' : 'N' %></td>
+        <td scope ="row"> 
+          <form class="me-3" action="/pokemon/delete/<%= p._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger" value="Remove from this team">Remove from this Team</button>
+          </form>  
+        </td>
+        
+          
+       
         
       </tr>
       <% }) %>
     </tbody>
   </table>
+
+</form>
 </div>
 
 

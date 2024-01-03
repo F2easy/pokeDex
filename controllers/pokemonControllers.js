@@ -55,11 +55,13 @@ router.get('/all', (req,res) => {
 
 // POST --> /places/add
 // gets data for the all pokemon show pages and adss to the users list
-router.post('/add', (req,res) => {
+router.post('/add', (req, res) => {
   const { username, loggedIn, userId } = req.session
 
   const thePokemon = req.body
   thePokemon.owner = userId
+  console.log("The Pokemon  ", thePokemon)
+  console.log("The UserId " + userId)
   // default value for a checked box is 'on'
   // this line of code coverts it 2x
   // which results in a boolean value
@@ -69,8 +71,8 @@ router.post('/add', (req,res) => {
   
   Pokemon.create(thePokemon)
     .then(newPokemon => {
-     // res.send(newPokemon)
-     res.redirect(`/pokemon/myTeam`)
+    //  res.send(newPokemon)
+     res.redirect(`/pokemon/trainer`)
     })
     .catch(err => {
       console.log('error')
@@ -81,7 +83,7 @@ router.post('/add', (req,res) => {
 
 
 // GET --> /pokemon/trainer
-// displays all the user's saved places
+// displays all the user's saved pokemon
 router.get('/trainer', (req,res) => {
   const { username, loggedIn, userId } = req.session
 
@@ -89,8 +91,8 @@ router.get('/trainer', (req,res) => {
   Pokemon.find({ owner: userId })
   // display them in a pokemon team format
   .then(userPokemon => {
-  // res.send(userPokemon)
-   res.render('pokemon/trainer', { pokemon: userPokemon, username, userId, loggedIn })
+ // res.send(userPokemon)
+  res.render('pokemon/trainer', { pokemon: userPokemon, username, userId, loggedIn })
   })
   // which 
   .catch (err => {
@@ -102,12 +104,12 @@ router.get('/trainer', (req,res) => {
 // GET -> /trainer/:id
 // Will display a single instance of a user's saved places
 
-router.get('/trainer/:id',(req,res) =>{
+router.get('/trainer/:id', (req,res) => {
   const { username, loggedIn, userId } = req.session
   // find a specific place using the id
   Pokemon.findById(req.params.id)
   // display a user-specific show page
-  .then(thePlace => {
+  .then(thePokemon => {
     res.send(thePokemon)
   })
   // send an error page is something goes wrong
@@ -117,31 +119,79 @@ router.get('/trainer/:id',(req,res) =>{
   })
 })
 
+// DELETE --> /Pokemon/delete/:id
+// remove pokemon from team only available to authorized user 
+router.delete('/delete/:id', (req, res) =>{
+  const { username, loggedIn, userId } = req.session
+  // target the specific place
+  const pokemonId = req.params.id
+  // find it in the db
+  Pokemon.findById(pokemonId)
+  // delete it 
+  .then(pokemon => {
+     // determin if loggedIn user is authorized to delete this (aka, the owner)
+  if (pokemon.owner == userId){
+    //here is where we delete
+    return pokemon.deleteOne()
+  } else { 
+    // if the loggedIn user is not the owner
+    res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Delete%20this%20Place`)
+  }
+  })
+// redirect to another page
+.then(deletedPokemon => {
+  res.redirect('/pokemon/trainer')
+})
+.catch (err => {
+  console.log('error')
+  res.redirect (`/error?error=${err}`)
+})
+})
+
 
 
 // GET -> /pokemon/:name
 // gives us a specific Pokemon's details after clicking card
 
-router.get('/:name',(req, res) => {
+router.get('/:name',async(req, res) => {
   const { username, loggedIn, userId } = req.session
   const pokemonName = req.params.name
+  let description 
   // const {enter parameters here} = req.params you can add mutliple parameters
   // make our api call
   axios(`${nameSearchBaseURL}${pokemonName}`)
-    // render results on the show page which should give pokemon individual details
-    .then(apiRes => {
-      console.log('this is apiRes.data \n', apiRes.data)
-      
-      // res.send(apiRes.data)
-        const pokemonInfo = apiRes.data
-      // render our results on the 'show'/detail page
-       res.render('pokemon/show', { pokemon: pokemonInfo, username, userId, loggedIn})
-    })
-    // if we get an error display said error
+  .then(apiRes => {
+    axios(apiRes.data.species.url)
+      .then(resTwo => {
+        const flavorTextEntries = resTwo.data.flavor_text_entries;
+        
+        // Filter for English entries and entries specific to Pokémon Shield
+        const englishEntries = flavorTextEntries.filter(entry =>
+          entry.language.name === 'en' && entry.version.name === 'alpha-sapphire'
+        );
+
+        if (englishEntries.length > 0) {
+          const finalDescription = englishEntries[englishEntries.length - 1].flavor_text;
+          console.log("Final English description in Pokémon Shield:", finalDescription);
+          
+          // Continue with the rest of your code...
+          const pokemonInfo = apiRes.data;
+          res.render('pokemon/show', { pokemon: pokemonInfo, username, userId, loggedIn, description: finalDescription });
+        } else {
+          console.log("No English description found for Pokémon platinum.");
+          // Handle the case when no English description is available for Pokémon Shield
+        }
+      })
+      .catch(error => {
+        console.error("Failed to fetch the Pokémon species information:", error);
+        // Handle the error appropriately
+      });
+  })
+  //  if we get an error display said error
   .catch(err => {
     console.log('error')
     res.redirect (`/error?error=${err}`)
- })
+ });
   
   
 })

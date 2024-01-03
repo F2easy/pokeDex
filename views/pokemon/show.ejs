@@ -5,7 +5,7 @@
   <a href="/pokemon/all" class="btn btn-warning">Back to PokeDex</a>
   <div class="container col text-center">
 </div>
-<div class="container">
+<div  class="container">
   <div class="reg">
     <h2 class="text-capitalize" class="text-center name-title"><%= pokemon.name %></h2>
     <img src="<%= pokemon.sprites.other.showdown.front_default %>" alt="pokemon" class="gif">
@@ -22,7 +22,7 @@
         <th scope="col">Height</th>
         <th scope="col">Weight</th>
         <th scope="col">Type</th>
-        <th scope="col">Info</th>
+        <th scope="col">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,8 @@
         <td scope="row"><%= pokemon.weight %></td>
         <td scope="row"><%= pokemon.types.map(function(type) 
         { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
-        <td scope="row"><%= pokemon.flavor_text_enteries %></td>
+        <td scope="row"><%= description %>
+         
       </tr>
     </tbody>
   </table>
@@ -50,6 +51,7 @@
               <input hidden type="number" name="weight" value="<%= pokemon.weight %>">
               <input hidden type="text" name="type" value="<%= pokemon.types.map(function(type) 
               { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %>">
+              <input hidden type="string" name="info" value="<%= description %>">
               <label for="onTeam">On Team</label>
               <input type="checkbox" name="onTeam" >
               <label for="favorite">Favorite?</label>

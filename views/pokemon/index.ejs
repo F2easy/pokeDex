@@ -3,11 +3,11 @@
 <div class="container center">
     <div class="container row text-center">
         <% pokemon.forEach(function(p) {%>
-            <div class="card mt-3 me-3 pokemonCard">
+            <div style="width:20rem" class="card mt-3 me-3 pokemonCard "  >
                 <div class="card-body">
                     <h5 class="card text-capitalize"> <%= p.name %></h5> 
-                    <a href="/pokemon/<%= p.name %>" class="btn">More Info</a>
-                    <img src="<%= p.image %>" alt="pokemon" class="pokemon">
+                    <a href="/pokemon/<%= p.name %>"button type="submit" class="btn-success blue">More Info</a>
+                    <img src="<%= p.image %>" alt="pokemon" class="pokemon-image">
    
                 </div>
             </div>
