@@ -12,31 +12,33 @@ const {Schema, model} = mongoose
 //////////////////////////////////
 //  Schema Definition ////////////
 //////////////////////////////////
-const teamSchema = new Schema({
-  username:{
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-})
+const arrayLimit = (arr) =>{
+  return arr.length <= 6 
+}
+    const teamSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
+    pokemon: {
+     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
+     validate: [arrayLimit, " {PATH} CANNOT EXCEED 6"] 
+    }
+  });
 
-
+// const arrayLimit = (arr) =>{
+//   return arr.length <= 6 
+// }
 
 
 
 
 
 //////////////////////////////////
-//  create user model ////////////
+//  create Team model ////////////
 //////////////////////////////////
 const Team = model('Team', teamSchema)
 
 
 //////////////////////////////////
-//  export user model ////////////
+//  export Team model ////////////
 //////////////////////////////////
 module.exports = Team

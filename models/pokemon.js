@@ -17,7 +17,6 @@ const pokemonSchema = new Schema({
   type:{ type: String, required: true,},
   onTeam:{ type: Boolean, required: true,},
   favorite:{ type: Boolean, required: true,},
-  // need to add more things description, maybe a map of encouters, maybe moves,abilities but also need to add that to show page
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',

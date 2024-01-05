@@ -15,6 +15,21 @@ body {
  width: 50%;
 }
 
+#teams {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+#teams option {
+  background-color: #fff;
+  color: #333;
+}
+
 
 .reg {
   display: flex;

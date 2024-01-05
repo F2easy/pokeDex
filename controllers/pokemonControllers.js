@@ -5,13 +5,14 @@
 //  Import Dependencies ///
 //////////////////////////////////
 const express = require('express')
+const mongoose = require('mongoose');
 const axios = require('axios')
 const Pokemon = require('../models/pokemon')
 const allPokemonURL = process.env.API_BASE_URL
 const nameSearchBaseURL = process.env.POKEMON_NAME_URL
 const pokemonDesc = process.env.POKEMON_DESCR_URL
-
-
+const Team = require('../models/team')
+const User = require('../models/user')
 
 
 
@@ -53,46 +54,41 @@ router.get('/all', (req,res) => {
      })
 })
 
-// POST --> /places/add
-// gets data for the all pokemon show pages and adss to the users list
-router.post('/add', (req, res) => {
+// suppossed to add pokemon to pokemonDB hat later we can access them and then redirects to trainer page 
+// POST --> /pokemon/add
+router.post('/add', (req,res) => {
   const { username, loggedIn, userId } = req.session
 
   const thePokemon = req.body
   thePokemon.owner = userId
-  console.log("The Pokemon  ", thePokemon)
-  console.log("The UserId " + userId)
   // default value for a checked box is 'on'
   // this line of code coverts it 2x
   // which results in a boolean value
   thePokemon.onTeam = !!thePokemon.onTeam
   thePokemon.favorite = !!thePokemon.favorite
   console.log('this must be the pokemon: \n', thePokemon)
-  
+
   Pokemon.create(thePokemon)
     .then(newPokemon => {
-    //  res.send(newPokemon)
-     res.redirect(`/pokemon/trainer`)
+     /// res.send(newPokemon)
+      res.redirect(`/pokemon/mine`)
     })
     .catch(err => {
       console.log('error')
       res.redirect (`/error?error=${err}`)
    })
-  
+
 })
 
-
-// GET --> /pokemon/trainer
 // displays all the user's saved pokemon
-router.get('/trainer', (req,res) => {
+router.get('/mine', (req,res) => {
   const { username, loggedIn, userId } = req.session
 
   // query the DB for all pokemon beloging to the logged in trainer
   Pokemon.find({ owner: userId })
   // display them in a pokemon team format
   .then(userPokemon => {
- // res.send(userPokemon)
-  res.render('pokemon/trainer', { pokemon: userPokemon, username, userId, loggedIn })
+    res.render('pokemon/mine', { pokemon: userPokemon, username, userId, loggedIn })
   })
   // which 
   .catch (err => {
@@ -101,23 +97,108 @@ router.get('/trainer', (req,res) => {
   })
 })
 
-// GET -> /trainer/:id
-// Will display a single instance of a user's saved places
 
-router.get('/trainer/:id', (req,res) => {
-  const { username, loggedIn, userId } = req.session
-  // find a specific place using the id
-  Pokemon.findById(req.params.id)
-  // display a user-specific show page
-  .then(thePokemon => {
-    res.send(thePokemon)
-  })
-  // send an error page is something goes wrong
-  .catch (err => {
-    console.log('error')
-    res.redirect (`/error?error=${err}`)
-  })
+
+
+
+
+
+
+
+
+
+// POST --> /pokemon/add
+// create teams
+router.post('/team/add', (req, res) => {
+ 
+  const { username, userId, pokemonId } = req.session;
+  const teamObject = req.body
+  console.log(req.body)
+  teamObject.owner = userId
+  console.log("userId and PokemonId", req.body)
+  Team.create(teamObject)
+    .then(newTeam => {
+      // console.log(newTeam)
+      // console.log("pokemon Id ",pokemonId)
+    // res.send(newPokemon)
+    res.redirect(`/pokemon/trainer`)
+     })
+      .catch((error) => {
+        console.error('Error adding Pokémon to team:', error);
+        res.status(500).json({ error: 'Failed to add Pokémon to team' });
+      });
+  });
+
+  
+// GET --> /pokemon/add
+// create teams
+router.get('/newTeam', (req, res) => {
+  const { username, loggedIn, userId } = req.session;
+  res.render('pokemon/createTeam', { username, loggedIn, userId } )
 })
+
+
+
+
+// GET --> /pokemon/trainer
+// displays all the user's saved teams
+router.get('/trainer', async (req, res) => {
+  try {
+    const { username, loggedIn, userId } = req.session;
+    const teams = await Team.find({ owner: userId });
+
+    res.render('pokemon/trainer', { teams, username, userId, loggedIn });
+  } catch (error) {
+    console.error(error);
+    res.redirect(`/error?error=${error.message}`);
+  }
+});
+
+// GET -> /trainer/:id
+//  shows teams of logged in user
+
+// router.get('/trainer/:id', (req,res) => {
+//   const { username, loggedIn, userId } = req.session
+//   // find a specific pokemon using the id
+//   Pokemon.findById(req.params.id)
+
+//   // display a user-specific show page
+//   .then(theTeam => {
+//     // res.send(theTeam)
+//   //console.log(theTeam)
+//   Pokemon.push(Team.pokemon)
+//   return theTeam.save
+//     .then (addedPokemon => {
+//   res.redirect('pokemon/trainer')
+//   })
+//   // send an error page is something goes wrong
+//   .catch (err => {
+//     console.log('error')
+//     res.redirect (`/error?error=${err}`)
+//   })
+// })
+// })
+
+// GET -> /addToTeam/:teamId/:pokeId
+// adds one pokemon to a team 
+router.post('/addToTeam/:pokeId', (req,res) => {
+  const { username, loggedIn, userId } = req.session
+  const { teamId } = req.body
+  const pokeId = req.body.pokeId
+  console.log("req.body", req.body)
+  console.log('Pokemon:', pokeId)
+  Team.findById(req.body.teamId)
+    .then(team =>{
+      team.pokemon.push(pokeId)
+      console.log("pokeId : ", pokeId)
+      return team.save()
+    })
+    .then(savedTeam => {
+    //  res.send(savedTeam)
+      // redirect to team
+     res.redirect('/pokemon/trainer')
+    })
+  })
 
 // DELETE --> /Pokemon/delete/:id
 // remove pokemon from team only available to authorized user 
@@ -140,7 +221,7 @@ router.delete('/delete/:id', (req, res) =>{
   })
 // redirect to another page
 .then(deletedPokemon => {
-  res.redirect('/pokemon/trainer')
+  res.redirect('/pokemon/mine')
 })
 .catch (err => {
   console.log('error')
@@ -150,13 +231,16 @@ router.delete('/delete/:id', (req, res) =>{
 
 
 
+
+
 // GET -> /pokemon/:name
 // gives us a specific Pokemon's details after clicking card
 
 router.get('/:name',async(req, res) => {
   const { username, loggedIn, userId } = req.session
   const pokemonName = req.params.name
-  let description 
+  const teams = await Team.find({owner: userId})
+  console.log(teams)
   // const {enter parameters here} = req.params you can add mutliple parameters
   // make our api call
   axios(`${nameSearchBaseURL}${pokemonName}`)
@@ -176,7 +260,7 @@ router.get('/:name',async(req, res) => {
           
           // Continue with the rest of your code...
           const pokemonInfo = apiRes.data;
-          res.render('pokemon/show', { pokemon: pokemonInfo, username, userId, loggedIn, description: finalDescription });
+          res.render('pokemon/show', { pokemon: pokemonInfo, teams, username, userId, loggedIn, description: finalDescription });
         } else {
           console.log("No English description found for Pokémon platinum.");
           // Handle the case when no English description is available for Pokémon Shield
@@ -186,7 +270,7 @@ router.get('/:name',async(req, res) => {
         console.error("Failed to fetch the Pokémon species information:", error);
         // Handle the error appropriately
       });
-  })
+  }) 
   //  if we get an error display said error
   .catch(err => {
     console.log('error')
@@ -196,30 +280,6 @@ router.get('/:name',async(req, res) => {
   
 })
 
-
-// router.get('/show',(req, res) => {
-//   const { username, loggedIn, userId } = req.session
-
-// axios(allPokemonURL)
-
-// .then(apiRes => {
-//   //pokeNumber[pokeNumber.length -1]
-//   console.log('this came back from the api: \n', apiRes.data.results)
-//   //console.log(pokeNumber)
-//   // apiRes.data is an array of pokemon objects
-//   // res.send(apiRes.data)
-//   //res.send(apiRes.data)
-//   res.render('pokemon/show', { pokemon: apiRes.data.results, username, userId, loggedIn})
-//   //console.log(apiRes)
-//   const pokemon = apiRes.data.results.map((data, index) => ({
-//       name: data.name,
-//       id: index + 1,
-//       image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
-//   }))
-//   //console.log(pokemon)
-//   res.render('pokemon/show', { pokemon, username, userId, loggedIn})
-// })
-// })
 
 
 

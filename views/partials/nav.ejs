@@ -12,8 +12,10 @@
       <div id="navBarNav" class="collapse navbar-collapse me-3">
           <% if (loggedIn) {%> 
             <a href="/pokemon/all" class="nav-link text-light me-3">Pokedex</a>
-            <a href="/pokemon/trainer" class="nav-link text-light me-3">My Pokemon</a>
+            <a href="/pokemon/mine" class="nav-link text-light me-3">My Pokemon</a>
+            <a href="/pokemon/trainer" class="nav-link text-light me-3">My Pokemon Teams</a>
             <a href="/users/logout" class="nav-link text-light me-3">Log out</a>
+            
           <%} else {%>  
             <a href="/pokemon/all" class="nav-link text-light me-3">All Pokemon</a>
             <a href="/users/signup" class="nav-link text-light me-3">Sign Up</a>

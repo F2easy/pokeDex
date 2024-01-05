@@ -2,7 +2,7 @@
 
 
 <div class="container center">
-  <h2>All <%= username %>'s Teams</h2>
+  <h2>All <%= username %>'s Pokemon Teams</h2>
   <hr>  <table class="table table-striped mt-3">
     <thead>
       <tr>
@@ -17,27 +17,23 @@
       </tr>
     </thead>
     <tbody>
-      <% pokemon.forEach((p) => { %>
-      
-      <tr>
-        <td scope="row"><a href="pokemon/trainer/<%= p.pokemonId %>"> <class="text-capitalize"> </a> <%= p.name %></td>
-        <td scope="row"><%=p.pokemonId %></td>
-        <td scope="row"><%=p.height %></td>
-        <td scope="row"><%=p.weight %></td>
-        <td scope="row"><%=p.type %></td>
-        <td scope="row"><%=p.OnTeam ? 'Y' : 'N' %></td>
-        <td scope="row"><%=p.favorite ? 'Y' : 'N' %></td>
-        <td scope ="row"> 
-          <form class="me-3" action="/pokemon/delete/<%= p._id %>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-danger" value="Remove from this team">Remove from this Team</button>
-          </form>  
-        </td>
-        
-          
-       
-        
-      </tr>
+      <% teams.forEach(function(team) { %>
+        <h4>Team: <%= team.name %></h4>
+        <ul>
+          <% team.pokemon.forEach(function(pokemon) { %>
+            <li>
+              Name: <%= team.pokemon.name %><br>
+              Pokemon ID: <%= team.pokemon.pokemonId %><br>
+              Height: <%= team.pokemon.height %><br>
+              Weight: <%= team.pokemon.weight %><br>
+              Type: <%= team.pokemon.type %><br>
+              On Team: <%= team.pokemon.onTeam %><br>
+              Favorite: <%= team.pokemon.favorite %>
+            </li>
+          <% }) %>
+        </ul>
       <% }) %>
+      
     </tbody>
   </table>
 

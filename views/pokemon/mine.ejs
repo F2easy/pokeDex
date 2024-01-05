@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+
+
+<div class="container center">
+  <div class="container row text-center">
+        <h2>All <%= username %>'s Pokemon</h2>
+        <hr>  <table class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Pokemon Name</th>
+              <th scope="col">Pokemon ID</th>
+              <th scope="col">Height</th>
+              <th scope="col">Weight</th>
+              <th scope="col">Type</th>
+             
+              <th scope="col">On Team ?</th>
+              <th scope="col">Favorite ?</th>
+              <th scope="col">Remove ?</th>
+              <th scope="col">Assign Team ?</th>
+              <th scope="col">Add to assigned Team ?</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <% pokemon.forEach((p) => { %>
+            
+            <tr>
+              <td scope="row" class="text-capitalize"><a href="pokemon/trainer/<%= p.id %>"></a> <%= p.name %></td>
+              <td scope="row"><%=p.pokemonId %></td>
+              <td scope="row"><%=p.height %></td>
+              <td scope="row"><%=p.weight %></td>
+              <td scope="row"><%= p.type %></td>
+              
+              <td scope="row"><%= p.onTeam %></td>
+              <td scope="row"><%= p.favorite %></td>
+              <td scope="row" action="/pokemon/delete/<%= p._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger" value="Remove from this team">Remove from collection</button>
+              </td>
+              <td scope="row" action="/pokemon/addToTeam/<%= pokemon._id %>" method="POST">
+                <select name="teamId" id="teams">
+                  <button type="submit" class="btn btn-success">Add Pokemon to Team</button>
+                  <option value="" selected enabled>Select a team</option>
+              </td>
+              <td scope="row" action="/pokemon/team/add" method="POST">
+             
+               <input type="submit" class="btn btn-success" value="Add to Team">
+              </button> 
+
+              </td>
+            </tr>
+            <% }) %>
+          
+       
+
+    
+
+
+<%- include('../partials/footer') %>

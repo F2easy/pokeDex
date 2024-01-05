@@ -14,6 +14,20 @@
     <h2 class="shiny-text" class="text-center name-title">Shiny Version</h2>
     <img src="<%= pokemon.sprites.other.showdown.front_shiny %>" alt="pokemon" class="shiny">
   </div>
+
+
+
+  <h3>Stats</h3>
+  <% pokemon.stats.forEach(function(stat) { %>
+    <div class="progress mb-3" >
+      <div class="progress-bar"<%= getProgressBarClass(stat.base_stat) %>" role="progressbar" style="width: <%= stat.base_stat %>%;" aria-valuenow="<%= stat.base_stat %>" aria-valuemin="0" aria-valuemax="255">
+        <%= stat.stat.name %> (<%= stat.base_stat %>)
+      </div>
+    </div>
+  <% }) %>
+
+
+
   <table class="table table-striped mt-3">
     <thead>
       <tr>
@@ -23,6 +37,8 @@
         <th scope="col">Weight</th>
         <th scope="col">Type</th>
         <th scope="col">Description</th>
+       
+        
       </tr>
     </thead>
     <tbody>
@@ -33,17 +49,20 @@
         <td scope="row"><%= pokemon.weight %></td>
         <td scope="row"><%= pokemon.types.map(function(type) 
         { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %> </td>
-        <td scope="row"><%= description %>
-         
+        <td scope="row"><%= description %> 
       </tr>
     </tbody>
   </table>
   <hr>
     <% if (loggedIn) {%>
-      <h5> Add this Pokemon to your team by clicking the box below!</h5>
-        <form action="/pokemon/add" method="POST">
+          </select>
+          <h5> Recruit this pokemon</h5>
+          <form action="/pokemon/add" method="POST">
+            <fieldset>
+              <input type="submit" class="btn btn-success" value="Add Pokemon">
+        </form>
+          </select>
           <fieldset>
-            <input type="submit" class="btn btn-success" value="Add Pokemon">
 <!-- name pokemonId height weight type onTeam favorite -->
               <input hidden type="text" name="name" value="<%= pokemon.name %>">
               <input hidden type="text" name="pokemonId" value="<%= pokemon.id %>">
@@ -51,11 +70,12 @@
               <input hidden type="number" name="weight" value="<%= pokemon.weight %>">
               <input hidden type="text" name="type" value="<%= pokemon.types.map(function(type) 
               { return type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1);}).join(' , '); %>">
-              <input hidden type="string" name="info" value="<%= description %>">
+              <input hidden type="string" class="text-capitalize" name="info" value="<%= description %>">
               <label for="onTeam">On Team</label>
               <input type="checkbox" name="onTeam" >
               <label for="favorite">Favorite?</label>
               <input type="checkbox" name="favorite" checked>
+              
           </fieldset>
         </form>
     <%  } else {%>
@@ -66,7 +86,17 @@
 <div>
   
 
-
+  <% function getProgressBarClass(baseStat) {
+    if (baseStat >= 75) {
+      return 'bg-danger';
+    } else if (baseStat >= 50) {
+      return 'bg-warning text-dark';
+    } else if (baseStat >= 25) {
+      return 'bg-info text-dark';
+    } else {
+      return 'bg-success';
+    }
+  } %>
 
 
 
