@@ -53,3 +53,18 @@ body {
 height: 100vh ;
 width: 100vw;
 }
+
+
+.add-to-team-form {
+  display: flex;
+  align-items: center;
+  width: min-content;
+}
+
+.team-dropdown {
+  margin-right: 5px;
+}
+
+.remove-from-team-form {
+  width: max-content;
+}

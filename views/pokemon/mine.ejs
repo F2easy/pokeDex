@@ -18,40 +18,40 @@
               <th scope="col">Favorite ?</th>
               <th scope="col">Remove ?</th>
               <th scope="col">Assign Team ?</th>
-              <th scope="col">Add to assigned Team ?</th>
+              
 
 
             </tr>
           </thead>
           <tbody>
             <% pokemon.forEach((p) => { %>
-            
-            <tr>
-              <td scope="row" class="text-capitalize"><a href="pokemon/trainer/<%= p.id %>"></a> <%= p.name %></td>
-              <td scope="row"><%=p.pokemonId %></td>
-              <td scope="row"><%=p.height %></td>
-              <td scope="row"><%=p.weight %></td>
-              <td scope="row"><%= p.type %></td>
-              
-              <td scope="row"><%= p.onTeam %></td>
-              <td scope="row"><%= p.favorite %></td>
-              <td scope="row" action="/pokemon/delete/<%= p._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-danger" value="Remove from this team">Remove from collection</button>
-              </td>
-              <td scope="row" action="/pokemon/addToTeam/<%= pokemon._id %>" method="POST">
-                <select name="teamId" id="teams">
-                  <button type="submit" class="btn btn-success">Add Pokemon to Team</button>
-                  <option value="" selected enabled>Select a team</option>
-              </td>
-              <td scope="row" action="/pokemon/team/add" method="POST">
-             
-               <input type="submit" class="btn btn-success" value="Add to Team">
-              </button> 
-
-              </td>
-            </tr>
+              <tr>
+                <td scope="row" class="text-capitalize">
+                  <a href="/pokemon/<%= p.name %>"><%= p.name %></a>
+                </td>
+                <td scope="row"><%= p.pokemonId %></td>
+                <td scope="row"><%= p.height %></td>
+                <td scope="row"><%= p.weight %></td>
+                <td scope="row"><%= p.type %></td>
+                <td scope="row"><%= p.onTeam %></td>
+                <td scope="row"><%= p.favorite %></td>
+                <td>
+                  <form action="/pokemon/delete/<%= p._id %>?_method=DELETE" method="POST" class="remove-from-team-form">
+                    <button type="submit" class="btn btn-danger" value="Remove from this team">Remove from collection</button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/pokemon/addToTeam/<%= p._id %>" method="POST" class="add-to-team-form">
+                    <select name="teamId" id="teams" class="team-dropdown">
+                      <option value="" selected disabled>Select a team</option>
+                      <!-- Options for teams -->
+                    </select>
+                    <button type="submit" class="btn btn-success">Add Pokemon to Team</button>
+                  </form>
+                </td>
+               
+              </tr>
             <% }) %>
-          
        
 
     
