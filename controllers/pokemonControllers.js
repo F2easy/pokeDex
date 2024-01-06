@@ -88,8 +88,11 @@ router.get('/mine', (req,res) => {
   Pokemon.find({ owner: userId })
   // display them in a pokemon team format
   .then(userPokemon => {
-    res.render('pokemon/mine', { pokemon: userPokemon, username, userId, loggedIn })
-  })
+    Team.find({ owner: userId})
+      .then(teams =>{
+    res.render('pokemon/mine', { pokemon: userPokemon, teams, username, userId, loggedIn })
+  });
+})
   // which 
   .catch (err => {
     console.log('error')
@@ -108,19 +111,21 @@ router.get('/mine', (req,res) => {
 
 
 // POST --> /pokemon/add
-// create teams
+//suppossed to add a team to TeamDB so that later we can access them and then redirects to trainer page 
+// creates teams 
 router.post('/team/add', (req, res) => {
  
   const { username, userId, pokemonId } = req.session;
   const teamObject = req.body
-  console.log(req.body)
+  teamObject.owner = userId
+  console.log("teamObject: ",req.body)
   teamObject.owner = userId
   console.log("userId and PokemonId", req.body)
   Team.create(teamObject)
     .then(newTeam => {
-      // console.log(newTeam)
+       console.log("New Team created: ", newTeam)
       // console.log("pokemon Id ",pokemonId)
-    // res.send(newPokemon)
+  //  res.send(teamObject)
     res.redirect(`/pokemon/trainer`)
      })
       .catch((error) => {
@@ -132,10 +137,10 @@ router.post('/team/add', (req, res) => {
   
 // GET --> /pokemon/add
 // create teams
-router.get('/newTeam', (req, res) => {
-  const { username, loggedIn, userId } = req.session;
-  res.render('pokemon/createTeam', { username, loggedIn, userId } )
-})
+// router.get('/team/add', (req, res) => {
+//   const { username, loggedIn, userId } = req.session;
+//   res.render('pokemon/trainer', { username, loggedIn, userId } )
+// })
 
 
 
@@ -181,24 +186,28 @@ router.get('/trainer', async (req, res) => {
 
 // GET -> /addToTeam/:teamId/:pokeId
 // adds one pokemon to a team 
-router.post('/addToTeam/:pokeId', (req,res) => {
+router.post('/pokemon/addToTeam', (req,res) => {
   const { username, loggedIn, userId } = req.session
-  const { teamId } = req.body
-  const pokeId = req.body.pokeId
+  const { teamId, pokeId} = req.body // retrieves pokeId and teamId
   console.log("req.body", req.body)
   console.log('Pokemon:', pokeId)
-  Team.findById(req.body.teamId)
+  Team.findById(teamId)
     .then(team =>{
-      team.pokemon.push(pokeId)
-      console.log("pokeId : ", pokeId)
-      return team.save()
+      if (!team) {
+        throw new Error('Team not found');
+      }
+      team.pokemon.push(pokeId);
+      return team.save();
     })
     .then(savedTeam => {
     //  res.send(savedTeam)
-      // redirect to team
-     res.redirect('/pokemon/trainer')
+     res.redirect('/pokemon/trainer');
     })
-  })
+    .catch(err => {
+      console.error('Error adding Pokémon to team:', err);
+      res.redirect(`/error?error=${err}`);
+    });
+});
 
 // DELETE --> /Pokemon/delete/:id
 // remove pokemon from team only available to authorized user 

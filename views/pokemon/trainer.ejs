@@ -1,20 +1,17 @@
 <%- include('../partials/header') %>
 
 
+
 <div class="container center">
   <h2>All <%= username %>'s Pokemon Teams</h2>
   <hr>  <table class="table table-striped mt-3">
     <thead>
-      <tr>
-        <th scope="col">Pokemon Name</th>
-        <th scope="col">Pokemon ID</th>
-        <th scope="col">Height</th>
-        <th scope="col">Weight</th>
-        <th scope="col">Type</th>
-        <th scope="col">On Team ?</th>
-        <th scope="col">Favorite ?</th>
-        <th scope="col">Delete Buddy</th>
-      </tr>
+      
+      <form action="team/add" method="POST">
+        <label for="teamName">Team Name:</label>
+        <input type="text" id="teamName" name="name" required>
+        <button type="submit">Create Team</button>
+      </form>
     </thead>
     <tbody>
       <% teams.forEach(function(team) { %>
@@ -33,7 +30,6 @@
           <% }) %>
         </ul>
       <% }) %>
-      
     </tbody>
   </table>
 
