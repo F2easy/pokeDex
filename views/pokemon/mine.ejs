@@ -41,7 +41,7 @@
                   </form>
                 </td>
                 <td>
-                  <form action="/pokemon/addToTeam" method="POST" class="add-to-team-form">
+                  <form action="/pokemon/addToTeam/<%= p._id %>" method="POST" class="add-to-team-form">
                     <select name="teamId" id="teams" class="team-dropdown">
                       <option value="" selected disabled>Select a team</option>
                       <% teams.forEach(function(team) { %>

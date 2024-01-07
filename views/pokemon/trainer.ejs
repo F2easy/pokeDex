@@ -19,13 +19,13 @@
         <ul>
           <% team.pokemon.forEach(function(pokemon) { %>
             <li>
-              Name: <%= team.pokemon.name %><br>
-              Pokemon ID: <%= team.pokemon.pokemonId %><br>
-              Height: <%= team.pokemon.height %><br>
-              Weight: <%= team.pokemon.weight %><br>
-              Type: <%= team.pokemon.type %><br>
-              On Team: <%= team.pokemon.onTeam %><br>
-              Favorite: <%= team.pokemon.favorite %>
+              Name: <%=pokemon.name %><br>
+              Pokemon ID: <%=pokemon.pokemonId %><br>
+              Height: <%=pokemon.height %><br>
+              Weight: <%=pokemon.weight %><br>
+              Type: <%=pokemon.type %><br>
+              On Team: <%=pokemon.onTeam %><br>
+              Favorite: <%=pokemon.favorite %>
             </li>
           <% }) %>
         </ul>

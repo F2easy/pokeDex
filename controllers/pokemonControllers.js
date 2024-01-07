@@ -150,7 +150,8 @@ router.post('/team/add', (req, res) => {
 router.get('/trainer', async (req, res) => {
   try {
     const { username, loggedIn, userId } = req.session;
-    const teams = await Team.find({ owner: userId });
+    const teams = await Team.find({ owner: userId }).populate('pokemon');
+    console.log(teams[0].pokemon)
 
     res.render('pokemon/trainer', { teams, username, userId, loggedIn });
   } catch (error) {
@@ -186,10 +187,13 @@ router.get('/trainer', async (req, res) => {
 
 // GET -> /addToTeam/:teamId/:pokeId
 // adds one pokemon to a team 
-router.post('/pokemon/addToTeam', (req,res) => {
+router.post('/addToTeam/:pokeId', (req,res) => {
   const { username, loggedIn, userId } = req.session
-  const { teamId, pokeId} = req.body // retrieves pokeId and teamId
-  console.log("req.body", req.body)
+  const { teamId} = req.body // retrieves pokeId and teamId
+  const pokeId = req.params.pokeId
+  const pokemon  = Pokemon.find({_id: req.params.pokeId})
+console.log(pokemon)
+  console.log("req.body: ", req.body)
   console.log('Pokemon:', pokeId)
   Team.findById(teamId)
     .then(team =>{
@@ -200,7 +204,7 @@ router.post('/pokemon/addToTeam', (req,res) => {
       return team.save();
     })
     .then(savedTeam => {
-    //  res.send(savedTeam)
+    //  res.send(savedTeam)so
      res.redirect('/pokemon/trainer');
     })
     .catch(err => {

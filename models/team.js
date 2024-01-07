@@ -7,6 +7,7 @@ const mongoose = require('../utils/connection')
 const {Schema, model} = mongoose
 
 
+const Pokemon = require('../models/pokemon')
 
 
 //////////////////////////////////
@@ -24,9 +25,6 @@ const arrayLimit = (arr) =>{
     }
   });
 
-// const arrayLimit = (arr) =>{
-//   return arr.length <= 6 
-// }
 
 
 
@@ -37,6 +35,10 @@ const arrayLimit = (arr) =>{
 //////////////////////////////////
 const Team = model('Team', teamSchema)
 
+
+
+
+// attempting to use populate
 
 //////////////////////////////////
 //  export Team model ////////////
