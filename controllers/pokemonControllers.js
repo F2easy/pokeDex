@@ -220,6 +220,10 @@ router.delete('/delete/:id', (req, res) =>{
 })
 
 
+
+
+
+
 router.put('/team/update/:id', (req, res) => {
   const { username, loggedIn, userId } = req.session
   const teamId = req.params.id ;
@@ -238,6 +242,44 @@ router.put('/team/update/:id', (req, res) => {
     res.redirect (`/error?error=${err}`)
   })
 });
+
+
+
+router.delete("/team/delete/:id", (req, res) => {
+  const { username, loggedIn, userId } = req.session
+  // Grabbing Team Id
+  const teamId = req.params.id ;
+  // Finding Team
+  Team.findById(teamId)
+  // Delete Team
+  .then(team => {
+    // determin if loggedIn user is authorized to delete this (aka, the owner)
+ if (team.owner == userId){
+   //here is where we delete
+   return team.deleteOne()
+ } else { 
+   // if the loggedIn user is not the owner
+   res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Delete%20this%20Place`)
+ }
+ })
+// redirect to another page
+.then(deletedTeam => {
+ res.redirect('/pokemon/trainer')
+})
+.catch (err => {
+ console.log('error')
+ res.redirect (`/error?error=${err}`)
+})
+})
+
+
+
+
+
+
+
+
+
 
 
 
