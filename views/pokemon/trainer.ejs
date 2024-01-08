@@ -2,38 +2,128 @@
 
 
 
-<div class="container center">
-  <h2>All <%= username %>'s Pokemon Teams</h2>
-  <hr>  <table class="table table-striped mt-3">
-    <thead>
-      
-      <form action="team/add" method="POST">
-        <label for="teamName">Team Name:</label>
-        <input type="text" id="teamName" name="name" required>
-        <button type="submit">Create Team</button>
-      </form>
-    </thead>
-    <tbody>
-      <% teams.forEach(function(team) { %>
-        <h4>Team: <%= team.name %></h4>
-        <ul>
-          <% team.pokemon.forEach(function(pokemon) { %>
-            <li>
-              Name: <%=pokemon.name %><br>
-              Pokemon ID: <%=pokemon.pokemonId %><br>
-              Height: <%=pokemon.height %><br>
-              Weight: <%=pokemon.weight %><br>
-              Type: <%=pokemon.type %><br>
-              On Team: <%=pokemon.onTeam %><br>
-              Favorite: <%=pokemon.favorite %>
-            </li>
-          <% }) %>
-        </ul>
-      <% }) %>
-    </tbody>
-  </table>
+<style>
+  body {
+    background-color: rgb(190, 222, 244);
+  }
 
-</form>
+  .trainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 50px auto;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .team-card {
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"] {
+    padding: 5px;
+    width: 200px;
+    margin-right: 10px;
+  }
+
+  button[type="submit"] {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<div class="container center trainer">
+  <h2>All <%= username %>'s Pokemon Teams</h2>
+  <hr>
+  <% teams.forEach(function(team) { %>
+  <div class="team-card">
+    <h4>
+      <%= team.name %>
+      <form action="/pokemon/team/update/<%= team._id %>?_method=PUT" method="POST" style="display: inline;">
+        <input type="text" name="name" value="<%= team.name %>" required>
+        <button type="submit">Change Team Name</button>
+      </form>
+    </h4>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Pokemon ID</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Type</th>
+          <th>On Team</th>
+          <th>Favorite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% team.pokemon.forEach(function(pokemon) { %>
+        <tr>
+          <td><%= pokemon.name %></td>
+          <td><%= pokemon.pokemonId %></td>
+          <td><%= pokemon.height %></td>
+          <td><%= pokemon.weight %></td>
+          <td><%= pokemon.type %></td>
+          <td><%= pokemon.onTeam %></td>
+          <td><%= pokemon.favorite %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% }) %>
+  <form action="team/add" method="POST">
+    <label for="teamName">Team Name:</label>
+    <input type="text" id="teamName" name="name" required>
+    <button type="submit">Create Team</button>
+  </form>
 </div>
 
 

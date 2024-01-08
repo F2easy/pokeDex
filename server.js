@@ -10,7 +10,7 @@ const progressBar = require('progress')
 // meaning improting the router and server js
 const UserRouter = require('./controllers/userControllers')
 const PokemonRouter = require('./controllers/pokemonControllers')
-
+const TrainerRouter = require('./controllers/pokemonControllers')
 ////////////////////////////////
 //// Create the app object  ////
 ////////////////////////////////
@@ -25,7 +25,7 @@ const app = express() // call the express function
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(express.static(path.join(__dirname, 'images')))
 
 /////////////////////
 //// Middleware  ////
@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', UserRouter)
 app.use('/pokemon', PokemonRouter)
+app.use('/trainer', TrainerRouter)
 
 // error page
 app.get('/error', (req, res) => {

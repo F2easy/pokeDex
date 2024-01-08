@@ -160,30 +160,7 @@ router.get('/trainer', async (req, res) => {
   }
 });
 
-// GET -> /trainer/:id
-//  shows teams of logged in user
 
-// router.get('/trainer/:id', (req,res) => {
-//   const { username, loggedIn, userId } = req.session
-//   // find a specific pokemon using the id
-//   Pokemon.findById(req.params.id)
-
-//   // display a user-specific show page
-//   .then(theTeam => {
-//     // res.send(theTeam)
-//   //console.log(theTeam)
-//   Pokemon.push(Team.pokemon)
-//   return theTeam.save
-//     .then (addedPokemon => {
-//   res.redirect('pokemon/trainer')
-//   })
-//   // send an error page is something goes wrong
-//   .catch (err => {
-//     console.log('error')
-//     res.redirect (`/error?error=${err}`)
-//   })
-// })
-// })
 
 // GET -> /addToTeam/:teamId/:pokeId
 // adds one pokemon to a team 
@@ -242,6 +219,25 @@ router.delete('/delete/:id', (req, res) =>{
 })
 })
 
+
+router.put('/team/update/:id', (req, res) => {
+  const { username, loggedIn, userId } = req.session
+  const teamId = req.params.id ;
+  const newTeamName = req.body.name;
+    console.log("team Id", teamId)
+    console.log("new name", newTeamName)
+  // Update the team name in the database using the teamId and newTeamName
+  Team.findByIdAndUpdate(teamId, { name: newTeamName })
+  .then(() => {
+    console.log('Team name updated successfully');
+    res.redirect('/pokemon/trainer');
+  // Redirect the user back to the page displaying the teams
+  })
+  .catch (err => {
+    console.log('error')
+    res.redirect (`/error?error=${err}`)
+  })
+});
 
 
 
